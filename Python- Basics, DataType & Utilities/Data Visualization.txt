@@ -1,0 +1,444 @@
+Data Visualization:
+Importing the packages:
+import numpy as np
+np.set_printoptions(precision=4)                    # To display values only upto four decimal places. 
+
+import pandas as pd
+pd.set_option('mode.chained_assignment', None)      # To suppress pandas warnings.
+pd.set_option('display.max_colwidth', -1)           # To display all the data in each column
+pd.options.display.max_columns = 50                 # To display every column of the dataset in head()
+
+import matplotlib.pyplot as plt
+plt.style.use('seaborn-whitegrid')                  # To apply seaborn whitegrid style to the plots.
+%matplotlib inline
+
+import seaborn as sns
+sns.set(style='whitegrid', font_scale=1.3, color_codes=True)      # To adjust seaborn settings for the plots.
+
+import warnings
+warnings.filterwarnings('ignore')                   # To suppress all the warnings in the notebook.
+
+# Importing the parallel_coordinates from pandas.plotting which will help in plotting the Parallel Coordinates.
+
+from pandas.plotting import parallel_coordinates
+# Install and update plotly using this command to the latest version (higher than version 4.0.0)
+
+!pip install plotly --upgrade
+# Install chart_studio, please use this command. 
+
+!pip install chart-studio
+
+Univariate Analysis:
+Bar Chart:
+
+# Using pandas plot.bar function to plot the bar chart for the Category column of the dataframe df_mcd.
+
+df_mcd['Category'].value_counts().plot.bar(figsize=(15,7), colormap='Dark2', fontsize=13, yticks=np.arange(0, 19, 2))
+
+# Using matplotlib to add labels and title to the plot. 
+# Pandas and matplotlib are linked with each other in the notebook by the use of this line in the Imports: %matplotlib inline
+
+plt.xlabel('Category')
+plt.ylabel('Number of Items')
+plt.title('Bar Chart showing the Number of Items in each Category value')
+
+# In order to save your plot into an image on your system, use the following command.
+# The image will be saved in the directory of this notebook.
+
+plt.savefig('barchart.png')   
+
+
+
+
+Line cHART:
+# Using pandas plot function to plot the line chart for the Energy column.
+# Using the kind='line' to plot a line chart. 
+
+df_mcd[['Energy']].plot(kind='line', figsize=(15,7), color='blue', fontsize=13, linestyle='-.')
+
+plt.xlabel('Index')
+plt.ylabel('Energy (kcal)')
+plt.title('Line chart showing the variation of energy across different items')
+
+
+
+aREA cHART:
+# Using pandas plot function to plot the area chart for the Total_Fat column.
+# Using the kind='area' to plot a area chart. 
+
+df_mcd['Total_Fat'].plot(kind='area', figsize=(15,7), color='violet', fontsize=13)
+                                                                    
+plt.xlabel('Index')
+plt.ylabel('Total_Fat')
+plt.title('Area chart showing the variation of Total Fat across different items')
+
+
+hISTOGRAM:
+# Using pandas plot function to plot the histogram for the Serve_Size column.
+# Using the kind='hist' to plot a histogram.
+
+bins = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500]
+df_mcd['Serve_Size'].plot(kind='hist', bins = bins, figsize=(15, 7), color='brown', yticks=np.arange(0, 22, 3), xticks=bins)
+
+plt.xlabel('Serve_Size')
+plt.ylabel('Frequency')
+plt.title('Histogram showing the distribution of Serve Size values')
+
+
+kde pLOT:
+# Using pandas plot function to plot the kde plot for the Energy column.
+# Using the kind='plot' to plot a kde plot.
+
+df_mcd['Serve_Size'].plot(kind='kde', figsize=(15, 7), color='black')
+
+plt.xlabel('Serve Size')
+plt.ylabel('Density')
+plt.title('KDE plot showing the density of Serve_Size values')
+
+
+sCATTER pLOT:
+# Using pandas plot function to plot the scatter plot for the Energy and Carbohydrates columns.
+# Using the kind='scatter' to plot a scatter plot.
+
+df_mcd.plot(kind='scatter', x='Carbohydrates', y='Energy', figsize=(10, 6), color='purple', grid=False)
+
+plt.title('Scatter plot showing the variation of Energy with Carbohydrates present in each item')
+
+
+rEG pLOT: cORELATION
+
+# Using seaborn's regplot function to plot the scatter plot for the Energy and Carbohydrates columns with the regression line.
+
+plt.figure(figsize=(12,7))
+sns.regplot(data=df_mcd, x='Carbohydrates', y='Energy', color='brown')
+
+plt.title('Regplot showing the variation of Energy with Carbohydrates present in each item')
+
+
+hEX PLOT:
+
+# Using pandas plot function to plot the hexplot for the Energy and Serve_Size columns.
+# Using the kind='hexbin' to plot a hexplot.
+
+df_mcd.plot(kind='hexbin', x='Serve_Size', y='Energy', figsize=(15, 7), gridsize=25, fontsize=13, colormap='Reds')
+
+plt.title('Hexplot showing the variation of Energy with Serve_Size of each item')
+
+
+
+sTACKEDED pLOT: bar
+n each category with respect to the Total_Fat.
+
+df_mcd.groupby(['Category'])['Total_Fat'].mean().plot(kind='bar', figsize=(15, 7), color='orange')
+df_mcd.groupby(['Category'])['Saturated_Fat'].mean().plot(kind='bar', figsize=(15, 7), color='grey')
+df_mcd.groupby(['Category'])['Trans_Fat'].mean().plot(kind='bar', figsize=(15, 7), color='red', fontsize=13)
+
+plt.xlabel('Category')
+plt.ylabel('Fat Content')
+plt.title('Stacked Bar Chart showing the Fat content of each Category')
+plt.legend(labels=('Total_Fat', 'Saturated_Fat', 'Trans_Fat'))
+
+
+Stacked Area
+# Using pandas plot function to plot the stacked area chart for the Revenue and Profits columns of df_store dataframe.
+# Using the kind='area' to plot a bar chart.
+# You can specify color using their hex code as well. (Just type any 6 random digits after #)
+
+df_store.groupby(['Customers'])['Revenue'].mean().plot(kind='area', figsize=(15, 7), color='#347593')
+df_store.groupby(['Customers'])['Profits'].mean().plot(kind='area', figsize=(15, 7), color='#363552', fontsize=13)
+
+
+plt.xlabel('Customers')
+plt.ylabel('Value')
+plt.title('Stacked Area Chart showing the Revenue and Profit in each state')
+plt.legend(labels=('Revenue', 'Profits'))
+
+
+
+Bivariate Liner Chart:
+# Using pandas plot function to plot the bivariate line chart for Cholestrol, and Total_Fat columns on the basis of Serve_Size.
+# Using the kind='line' to plot a line chart.
+
+df_mcd.groupby(['Serve_Size'])['Cholestrol'].mean().plot(kind='line', figsize=(15, 7), color='green')
+df_mcd.groupby(['Serve_Size'])['Total_Fat'].mean().plot(kind='line', figsize=(15, 7), color='red')
+
+plt.ylabel('Value')
+plt.title('Bivariate Linear Chart showing the variation of Cholestrol and Total_Fat with Serve_Size')
+plt.legend(['Cholestrol (in mg)', 'Total_Fat (in g)'])
+
+
+Pair Plot:
+# Using seaborn's pairplot function to plot the pairplot for specific columns of the dataset.
+
+sns.pairplot(data=df_mcd[['Energy', 'Total_Fat', 'Sugars', 'Carbohydrates', 'Protein']], size=2.5, diag_kind='kde')
+
+
+Bivariate Pair Plot:
+sns.pairplot(data=df_mcd[['Energy', 'Total_Fat', 'Sugars', 'Carbohydrates', 'Protein']], size=2.5, diag_kind='kde')
+
+
+Multivariate Scatter plot:
+
+# Using seaborn's scatterplot function to plot the scatter plot for the Energy and Sugars columns.
+# Setting hue='Category' to give different colors to the data points based on the category they belong to.
+
+plt.figure(figsize=(12,8))
+sns.scatterplot(data=df_mcd, x='Sugars', y='Energy', hue='Category')
+
+plt.xlabel('Sugars')
+plt.ylabel('Energy')
+plt.title('Scatter plot showing the variation of Energy with Sugars present in each item with a hue based on Category')
+plt.grid(False)
+plt.legend(fontsize=12)
+
+
+Grouped Box Plot:
+# Using seaborn's boxplot to plot a grouped boxplot of the Revenue and State columns.
+
+plt.figure(figsize=(12,7))
+sns.boxplot(data=df_store, x='State', y='Revenue', palette='rainbow')
+
+plt.title('Revenue vs State')
+
+
+Heat Map:
+Correlation matrix
+# Creating a correlation matrix using the corr function of the dataframe.
+# Using seaborn's heatmap function to plot a heatmap of the correlatin matrix.
+
+corr_mat = df_mcd.corr()
+plt.figure(figsize=(10,8))
+
+Parallal Coorditanes:
+# Using pandas parallel_coordinates to plot the Parallel Coordinates betwen 'Serve_Size', 'Energy', 'Cholestrol', 
+# 'Carbohydrates' columns on the basis of Category_colab column.
+
+plt.figure(figsize=(16,9))
+parallel_coordinates(df_pc, 
+                     class_column='High_Or_Low_Sugar', colormap='viridis',  
+                     cols=['Energy', 'Protein', 'Total_Fat', 'Carbohydrates'])
+					 
+violin Plot					 
+					 # Using seaborn's violinplot function to draw a violin plot between High_Or_Low_Sugar and Serve_Size columns.
+
+plt.figure(figsize=(15,8))
+sns.violinplot(data=df_mcd, x='High_Or_Low_Sugar', y='Energy', palette='magma')
+
+plt.title('Violen plot showing the variation of Energy on the basis of High_Or_Low_Sugar')
+					 
+					 
+data visualization:
+
+Univariate Analysis Visulization:
+Univariate plots:
+Line Chart :
+pokemon['HP'].value_counts().sort_index().plot.line()
+Area Chart:
+pokemon['Total'].value_counts().sort_index().plot.area()
+Histogram
+ pokemon['Total'].plot.hist()
+ Scatter:
+  pokemon.plot.scatter(x='Attack', y='Defense')
+
+  Bivariate Plots
+  Hexplot:
+   pokemon.plot.hexbin(x='Attack', y='Defense', gridsize=25)
+
+       pokemon_stats_legendary = pokemon.groupby(['Legendary', 'Generation']).mean()[['Attack', 'Defense']]
+    pokemon_stats_legendary.plot.bar(stacked=True)
+	
+Stacked Chart:
+    pokemon_stats_legendary = pokemon.groupby(['Legendary', 'Generation']).mean()[['Attack', 'Defense']]
+    pokemon_stats_legendary.plot.bar(stacked=True)
+	
+pokemon_stats_by_generation = pokemon.groupby('Generation').mean()[['HP', 'Attack', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed']]
+    pokemon_stats_by_generation.plot.line()
+	
+pair plot
+    sns.pairplot(pokemon.drop("Name", axis=1), hue="Legendary",palette="viridis", size=2)
+	
+	
+multivariate Plotting:
+Scatter Plot
+ sns.lmplot(x='Attack', y='Defense', hue='Legendary', markers=['x', 'o'],fit_reg=False, data=pokemon)
+ 
+ Box plot:
+ sns.boxplot(x="Generation", y="Total", hue='Legendary', data=pokemon)
+
+ Heat map:
+  sns.heatmap(pokemon.loc[:, ['HP', 'Attack', 'Sp. Atk', 'Defense', 'Sp. Def', 'Speed']].corr(),annot=True)
+  
+  Parallal Coordinates:
+  p = (pokemon[(pokemon['Type 1'].isin(["Psychic", "Fighting"]))]
+         .loc[:, ['Type 1', 'Attack', 'Sp. Atk', 'Defense', 'Sp. Def']]
+    )
+    parallel_coordinates(p, 'Type 1')
+	
+	Swarm Plot:
+	    sns.swarmplot(x="Generation", y="Defense", hue="Legendary", palette="gnuplot", data=pokemon)
+
+
+
+
+Pie Chart:
+df_merge['Ownership_Type'].value_counts().plot(kind='pie', explode=[0.05,0.05,0.05], fontsize=14, autopct='%3.1f%%', 
+                                               figsize=(10,10), shadow=True, startangle=135, legend=True, cmap='summer')
+
+plt.ylabel('Ownership Type')
+plt.title('Donut Plot showing the proportion of each Ownership_Type value')
+
+
+# Using pandas plot function to plot a donut plot of the Category column.
+# Using kind='pie' to plot a donut plot, also setting explode values so that it takes a donut shape instead of a pie shape.
+
+space = np.ones(11)/10
+df_mcd['Category'].value_counts().plot(kind='pie', explode=space, fontsize=14, autopct='%3.1f%%', wedgeprops=dict(width=0.15), 
+                                       shadow=True, startangle=160, figsize=(10,10), cmap='inferno', legend=True)
+
+plt.ylabel('Category')
+plt.title('Donut Plot showing the proportion of each Category value')
+
+
+Horizintal Bar Graph:
+
+df_merge.groupby(['Category'])['Energy'].mean().sort_values().plot(kind='barh', figsize=(12,8), fontsize=13, color='red')
+plt.xlabel('Calories')
+
+Box plot
+plt.figure(figsize=(16, 7))
+sns.boxplot(data=df_merge, x='Category', y='Dietary_Fibre', palette='viridis', width=0.8)
+plt.xticks(rotation=90)
+
+Heat Map:
+
+plt.figure(figsize=(8, 6))
+df_nutritious = df_nutritious[Nutritious]
+sns.heatmap(df_nutritious, annot=True, cmap='viridis')
+plt.title('Food items with high Protein and Fibre Content')
+
+
+Scatter plot:
+
+trace = go.Scatter(y=df_merge['Protein'].values, x=df_merge['Best_Selling_Item'].values, mode='markers',
+                   marker=dict(size=df_merge['Protein'].values, color=df_merge['Protein'].values, colorscale='Rainbow',
+                               showscale=True))
+							   
+	data = [trace]
+	
+
+	
+	layout = go.Layout(autosize=True, title = go.layout.Title(text='Scatter plot of Protein per Item on the Menu'), 
+                   hovermode='closest', xaxis=dict(showgrid=False, zeroline=False, showline=False), 
+                   yaxis=dict(title='Protein', ticklen=5, gridwidth=2, showgrid=False, zeroline=False, showline=False), 
+                   showlegend=False)
+				   
+				   
+	fig = go.Figure(data=data, layout=layout)
+iplot(fig, filename='scatterChol')
+
+
+
+Cat plot:
+sns.catplot(x='Ownership_Type', y='Number_of_Employees', hue='Country', data=df_merge, height=7, kind='bar', 
+            palette='spring')
+			
+			
+			
+			Box Plot:
+			for key, value in enumerate(nutritional_info):
+    sns.boxplot(data=df_merge, x=value, y='Country', orient='h', ax=axes[key], palette='winter')
+	
+	
+	Pie Chart: Donut
+	
+	df_merge.groupby(['Country', 'Category'])['Revenue'].mean().plot(kind='pie', autopct='%3.1f%%', wedgeprops=dict(width=0.15), 
+                                                                 explode=np.ones(20)/10, figsize=(13, 12), fontsize=11, 
+                                                                 startangle=20, shadow=True, cmap='inferno')
+																 
+																 
+																 
+Count Plot:
+
+plt.figure(figsize=(10,5))
+sns.countplot('gender',data = mh, order = mh['gender'].value_counts().index,palette="PuBuGn_d")
+plt.title("Gender Counts",fontsize=18,fontweight="bold")
+plt.xlabel('Gender')
+plt.ylabel('Frequency')
+plt.show()
+
+
+Sub Plots: Pie Chart
+
+f,ax = plt.subplots(1,3,figsize=(22,6))
+mh['treatment'][mh['gender'] == 'male'].value_counts().plot.pie(explode=[0,0.2],autopct='%1.1f%%',ax=ax[0],shadow=True)
+mh['treatment'][mh['gender'] == 'female'].value_counts().plot.pie(explode=[0,0.2],autopct='%1.1f%%',ax=ax[1],shadow=True)
+mh['treatment'][mh['gender'] == 'trans'].value_counts().plot.pie(explode=[0,0.2],autopct='%1.1f%%',ax=ax[2],shadow=True)
+ax[0].set_title('treatment (male)')
+ax[1].set_title('treatment (female)')
+ax[2].set_title('treatment (trans)')
+
+
+Label Encoding:
+from sklearn.preprocessing import LabelEncoder                                    # Label encoder is used to transform non-numerical labels to numerical labels.
+number = LabelEncoder()                                                           # Here as our data set consists only of categorical values except age
+for i in mh_new.columns:                                                          # in order to find the correlation between variables, we do Label encoding 
+    mh_new[i] = number.fit_transform(mh_new[i].astype('str'))
+	
+	
+	Swarm Plot:
+	
+	sns.set(style="whitegrid", palette="muted")
+
+
+# "Melt" the dataset to "long-form" or "tidy" representation
+pd.melt(mh, "work_interfere")
+
+# Draw a categorical scatterplot to show each observation
+sns.swarmplot(x="work_interfere", y="age_clean", 
+              palette='gnuplot', data=mh)
+			  
+			  
+			  
+			  
+			  
+Double donut pie chart
+group_names=['Treatment', 'No Treatment']
+group_size=[637,622]
+subgroup_names=['Treatment.Male','Treatment.Female','Treatment.trans','No Treatment.Male','No Treatment.Female','No Treatment.trans']
+subgroup_size=[450,170,15,541,77,4]
+ 
+# Create colors
+a, b, c=[plt.cm.Blues, plt.cm.Reds, plt.cm.Greens]
+ 
+# First Ring (outside)
+fig, ax = plt.subplots()
+ax.axis('equal')
+mypie, _ = ax.pie(group_size, radius=1.3, labels=group_names, colors = ['yellowgreen', 'gold'])
+plt.setp( mypie, width=0.3, edgecolor='white')
+
+# wedges, texts, autotexts = ax.pie(group_size, autopct=lambda pct: func(pct, data),
+                                  #textprops=dict(color="w"))
+ 
+# Second Ring (Inside)
+mypie2, _ = ax.pie(subgroup_size, radius=1.3-0.3, labels=subgroup_names, labeldistance=0.7, colors=[a(0.5), b(0.4), c(0.5), a(0.5), b(0.4), c(0.5)])
+plt.setp( mypie2, width=0.4, edgecolor='white')
+plt.margins(0,0)
+plt.title('Donut plot')
+# show it
+plt.show()
+
+
+##Dist Plot
+
+f, axes = plt.subplots(2, 2, figsize=(7, 7), sharex=True)                                      # Set up the matplotlib figure
+sns.despine(left=True)
+
+sns.distplot(data.sales, color="b", ax=axes[0, 0])
+
+sns.distplot(data.TV, color="r", ax=axes[0, 1])
+
+sns.distplot(data.radio, color="g", ax=axes[1, 0])
+
+sns.distplot(data.newspaper, color="m", ax=axes[1, 1])
+
+
