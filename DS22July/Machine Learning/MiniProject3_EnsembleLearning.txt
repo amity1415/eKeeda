@@ -1,0 +1,27 @@
+https://github.com/academind/react-complete-guide-code/tree/03-react-basics-working-with-components/code
+
+
+http://localhost:8765/CURRENCY-EXCHANGE/currency-exchange/from/USD/to/INR
+
+http://localhost:8765/CURRENCY-EXCHANGE/currency-exchange/from/USD/to/INR
+
+http://localhost:8765/CURRENCY-CONVERSION/currency-conversion/from/USD/to/INR/quantity/100
+
+http://localhost:8765/CURRENCY-CONVERSION/currency-conversion-feign/from/USD/to/INR/quantity/100
+
+
+
+
+Activity on Multi Class Classification. //Recall/Precisionm/Confusion Matc
+.
+
+0.471527818
+0.380263151
+0.407102173
+0.084657561
+0.79129841
+0.28305443
+0.627015771
+
+ Imabalnced Dataset and its effect on Classification, Bias Variance Tradeoff,
+Different types of metrics for Classification

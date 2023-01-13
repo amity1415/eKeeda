@@ -1,0 +1,52 @@
+Capstone Project:
+
+Steps :
+	1. Choose the Dataset:
+		a. Missing Values Present
+		b. Dataset should be combination of numeric and categorical variables.
+		c. Row Count >=1000 to 100000
+		d. Column Count >=10 and <=1000.
+		e. Should be based on some trending topic.
+		
+	2. Study the Data.
+		a. Understand the meaning and relevance of each column in the data set.
+		b. Identify irrelavent columns like Serial No., ID# which can be dropped during preprocessing.
+	
+	3. Start Preprocessing:
+		a. You can choose to run Pandas Preprofiling Report.
+		b. Perform Preprocessing:
+			i) Data Cleaning: Imputing Missing Values, Check and replace for NAN values, Remove Duplicates ( Refer to High Cardinality in Pandas Preprofiling report), Check and drop High Correlated Columns.
+		c. Run Pandas Postprofiling Report.
+	
+	4. EDA:
+		a. Outlier Detection
+		b. Converting Categorical to Numeric Data. ( One Hot Encoding, Label Encoding).
+		c. Normalization ( Standard Scalar, Min Max Scalar e.t.c).
+		d. Data Visualization : Univariate, Bi Variate and Multivariate Analysis using Python Libraries.
+		e.Autocorelation should be absent in the data.
+	
+	5. Split the Data into Training and Test Set. ( test_size=0.3 / 0.2). Go for test_size=0.3 if the row_count of the dataset is <1000.
+	
+	6. Implement the Machine Learning Algorithm:
+		a. Choosing the best algorithm for the data. Refer to the article following the below link: https://towardsdatascience.com/how-to-choose-the-right-machine-learning-algorithm-for-your-application-1e36c32400b9
+		
+		b. LazyPredict:
+		c. Refer the the FF_classification.ipynb file shared by me.
+	
+	8. Perform Model Evaluation.
+		a. If Model performance is per expectation : Proceed with next step.
+		b. If Model performance is not per expectation: Repeat step 6 with hypertuning the parameters or using a different model.
+	
+	9. Provide Colclusion on the Machine Learning Model that is build.
+	
+Additional Tips: 
+ * Always maintain a content index.
+ * Always follow the heading pattern. 
+ * Always use Text/Markdown before a code cell to explain what is being attempted to be done.
+ * Always use Texrt/Markdown column to explain the observation/output from the code cell.
+ * Provide Actionable Insigths after performing the EDA.
+ * In Conclusion, mention the pros and cons of each algorithm used. 
+	
+		
+		
+		
